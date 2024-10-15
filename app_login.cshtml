@@ -1,0 +1,69 @@
+﻿@using JobServicePortal
+@using JobServicePortal.Controllers
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,DNTCaptcha.Core
+
+@model JobServicePortal.Models.ApplicantRegistration
+@{
+    ViewData["Title"] = "App_Login";
+}
+<form method="post">
+
+    <b><label>Enter UserName:</label></b>
+    <input type="text" name="t1" class="form-control" style="background-color:aliceblue" />
+    <b><label>Enter Password:</label></b>
+    <input type="password" name="t2" class="form-control" style="background-color:aliceblue" />
+
+    <div class="input-group mb-3">                     
+        <dnt-captcha asp-captcha-generator-max="999999" 
+        asp-captcha-generator-min="111111" 
+        asp-captcha-generator-language="English"
+        asp-captcha-generator-display-mode="ShowDigits" 
+        asp-use-relative-urls="true" 
+        asp-placeholder="Enter Captcha" 
+        asp-validation-error-message="Please enter the security code." 
+        asp-font-name="Tahoma" 
+        asp-font-size="20" 
+        asp-fore-color="#333333"
+        asp-back-color="#ccc" 
+        asp-text-box-class="text-box form-control" 
+        asp-text-box-template="<span class='input-group-prepend'>
+        <span class='form-group-text'></span></span>{0}"
+        asp-validation-message-class="text-danger" 
+        asp-refresh-button-class="fas fa-redo btn-sm" asp-use-noise="false" />                     
+    </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script> 
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script> 
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script> 
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+
+
+    <b><input type="submit" value="Login" class="btn btn-info" style="align-content:center" /></b>
+
+
+
+</form>
+
+
+<div>
+    @ViewData["MessageAppLogin"];
+</div>
+
+
+<div class="btn btn-info">
+    @Html.ActionLink("New User? Click Here", "Register")
+</div>
+
+
+<div class="btn btn-info">
+    @Html.ActionLink("Forgot Password", "ResetPassword")
+</div>
+
+
+
+

@@ -1,0 +1,63 @@
+﻿@model JobServicePortal.Models.JobApplicant
+
+<div>
+    @if (ViewData["Message"] != null)
+    {
+        <p>@ViewData["Message"]</p>
+    }
+</div>
+
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="jobId" value="@ViewBag.JobId" /> <!-- Ensure JobId is passed correctly -->
+
+    <div>
+        <label for="FirstName">First Name</label>
+        <input asp-for="FirstName" required />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="LastName">Last Name</label>
+        <input asp-for="LastName" required />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Phone">Phone</label>
+        <input asp-for="Phone" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Address">Address</label>
+        <input asp-for="Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="EmailId">Email</label>
+        <input asp-for="EmailId" required />
+        <span asp-validation-for="EmailId" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Dob">Date of Birth</label>
+        <input asp-for="Dob" type="date" />
+        <span asp-validation-for="Dob" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Gender">Gender</label>
+        <select asp-for="Gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div>
+        <label for="ResumePath">Resume</label>
+        <input type="file" asp-for="ResumePath" required /> <!-- Use ResumePath for file upload -->
+        <span asp-validation-for="ResumePath" class="text-danger"></span>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartial")
+}
+

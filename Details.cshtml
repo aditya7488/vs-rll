@@ -1,0 +1,35 @@
+﻿@model JobServicePortal.Models.JobApplicant
+
+<h2>Job Applicant Details</h2>
+
+<div>
+    <strong>First Name:</strong> @Model.FirstName
+</div>
+<div>
+    <strong>Last Name:</strong> @Model.LastName
+</div>
+<div>
+    <strong>Phone:</strong> @Model.Phone
+</div>
+<div>
+    <strong>Address:</strong> @Model.Address
+</div>
+<div>
+    <strong>Email:</strong> @Model.EmailId
+</div>
+<div>
+    <strong>Date of Birth:</strong> @Model.Dob?.ToString("yyyy-MM-dd")
+</div>
+<div>
+    <strong>Gender:</strong> @Model.Gender
+</div>
+<div>
+    <strong>Resume:</strong> @(Model.ResumePath))
+    {
+        <a href="@Url.Content("~/resumes/" + Model.ResumePath)" download>Download</a>
+    }
+</div>
+
+<a asp-action="Index">Back to Applicants List</a>
+
+

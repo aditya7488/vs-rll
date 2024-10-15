@@ -1,0 +1,107 @@
+﻿@using JobServicePortal
+@using JobServicePortal.Controllers
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,DNTCaptcha.Core
+
+@model JobServicePortal.Models.ApplicantRegistration
+@{
+    ViewData["Title"] = "App_Registration";
+} 
+<h2>Registration</h2>
+ 
+<div>
+    @if (ViewData["MessageAppRegistration"] != null)
+    {
+<div class="alert alert-info">@ViewData["v"]</div>
+    }
+</div>
+ 
+<form asp-action="App_Registration" method="post">
+<div class="form-group">
+        @Html.LabelFor(m => m.UserId)
+        @Html.EditorFor(m => m.UserId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.UserId, "", new { @class = "text-danger" })
+</div>
+ 
+    <div class="form-group">
+        @Html.LabelFor(m => m.Username)
+        @Html.EditorFor(m => m.Username, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+</div>
+ 
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+</div>
+ 
+    <div class="form-group">
+        @Html.LabelFor(m => m.NormPassword)
+        @Html.EditorFor(m => m.NormPassword, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+        @Html.ValidationMessageFor(m => m.NormPassword, "", new { @class = "text-danger" })
+</div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName)
+        @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName)
+        @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Phone)
+        @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProfilePicture)
+        @Html.EditorFor(m => m.ProfilePicture, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+        @Html.ValidationMessageFor(m => m.ProfilePicture, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.RegistrationDate)
+        @Html.EditorFor(m => m.RegistrationDate, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+        @Html.ValidationMessageFor(m => m.RegistrationDate, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="input-group mb-3">
+        <dnt-captcha asp-captcha-generator-max="999999"
+                     asp-captcha-generator-min="111111"
+                     asp-captcha-generator-language="English"
+                     asp-captcha-generator-display-mode="ShowDigits"
+                     asp-use-relative-urls="true"
+                     asp-placeholder="Enter Captcha"
+                     asp-validation-error-message="Please enter the security code."
+                     asp-font-name="Tahoma"
+                     asp-font-size="20"
+                     asp-fore-color="#333333"
+                     asp-back-color="#ccc"
+                     asp-text-box-class="text-box form-control"
+                     asp-text-box-template="<span class='input-group-prepend'>
+        <span class='form-group-text'></span></span>{0}"
+        asp-validation-message-class="text-danger"
+        asp-refresh-button-class="fas fa-redo btn-sm" asp-use-noise="false" />
+    </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+ 
+<div>
+<a asp-action="Index">Back to list</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+ 
