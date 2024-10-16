@@ -1,4 +1,4 @@
-﻿@model JobServicePortal.Models.JobApplicant
+﻿@model CarrerSolutions.Models.JobApplicant
 
 <div>
     @if (ViewData["Message"] != null)
@@ -48,10 +48,11 @@
             <option value="Other">Other</option>
         </select>
     </div>
-    <div>
-        <label for="ResumePath">Resume</label>
-        <input type="file" asp-for="ResumePath" required /> <!-- Use ResumePath for file upload -->
-        <span asp-validation-for="ResumePath" class="text-danger"></span>
+    <div class="card-body">
+        <div class="form-group">
+            <label asp-for="Resumee" class="form-label"></label>
+            <input type="file" name="ResumePath" class="form-control" accept=".pdf,.doc,.docx" required />
+        </div>
     </div>
 
     <button type="submit">Submit</button>
@@ -60,4 +61,3 @@
 @section Scripts {
     @Html.Partial("_ValidationScriptsPartial")
 }
-

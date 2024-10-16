@@ -1,0 +1,90 @@
+﻿@using CarrerSolutions
+@using CarrerSolutions.Controllers
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *,DNTCaptcha.Core
+
+@model CarrerSolutions.Models.CompanyRegistration
+@{
+    ViewData["Title"] = "CRegistration";
+}
+<h2>FrontOffice Registration</h2>
+<div>
+    @if (ViewData["Message"] != null)
+
+    {
+        <div class="alert alert-info">@ViewData["Message"]</div>
+    }
+</div>
+<form asp-action="CRegistration" method="post">
+    <div class="form-group">
+        @Html.LabelFor(m => m.CompanyId)
+        @Html.EditorFor(m => m.CompanyId, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.CompanyId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CompanyName)
+        @Html.EditorFor(m => m.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.NormPassword)
+        @Html.EditorFor(m => m.NormPassword, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+        @Html.ValidationMessageFor(m => m.NormPassword, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ContactPerson)
+        @Html.EditorFor(m => m.ContactPerson, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+        @Html.ValidationMessageFor(m => m.ContactPerson, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address)
+        @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Phone)
+        @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "form-control", type = "text" } })
+        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="input-group mb-3">
+        <dnt-captcha asp-captcha-generator-max="999999"
+                     asp-captcha-generator-min="111111"
+                     asp-captcha-generator-language="English"
+                     asp-captcha-generator-display-mode="ShowDigits"
+                     asp-use-relative-urls="true"
+                     asp-placeholder="Enter Captcha"
+                     asp-validation-error-message="Please enter the security code."
+                     asp-font-name="Tahoma"
+                     asp-font-size="20"
+                     asp-fore-color="#333333"
+                     asp-back-color="#ccc"
+                     asp-text-box-class="text-box form-control"
+                     asp-text-box-template="<span class='input-group-prepend'>
+<span class='form-group-text'></span></span>{0}"
+    asp-validation-message-class="text-danger"
+    asp-refresh-button-class="fas fa-redo btn-sm" asp-use-noise="false" />
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+<div>
+    <a asp-action="Index">Back to list</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
