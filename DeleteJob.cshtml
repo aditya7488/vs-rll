@@ -1,0 +1,28 @@
+﻿@model JobPortal.Models.JobPost
+
+<h2>Delete Job</h2>
+
+<div>
+    <h3>Are you sure you want to delete this job?</h3>
+    <p><strong>Job Title:</strong> @Model.JobTitle</p>
+    <p><strong>Description:</strong> @Model.JobDescription</p>
+    <p><strong>Location:</strong> @Model.JobLocation</p>
+    <p><strong>Salary Range:</strong> @Model.SalaryRange</p>
+    <p><strong>Posted On:</strong> @Model.PostDate.ToString("d")</p>
+    <p><strong>Experience Required:</strong> @Model.ExperienceRequired years</p>
+    <p><strong>Minimum Qualification:</strong> @Model.MinimumQualification</p>
+    <p><strong>Job Type:</strong> @Model.JobType</p>
+</div>
+
+<form asp-action="DeleteJob" method="post">
+    <input type="hidden" asp-for="JobId" />
+    <button type="submit">Delete</button>
+    <a href="@Url.Action("Index", "JobPost")">Cancel</a>
+</form>
+
+<div>
+    @if (ViewData["Message"] != null)
+    {
+        <p>@ViewData["Message"]</p>
+    }
+</div>

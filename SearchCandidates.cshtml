@@ -1,0 +1,65 @@
+﻿@model IEnumerable<JobPortal.Models.JobApplicant>
+
+@{
+    ViewBag.Title = "Search Candidates";
+}
+
+<h2>Search Candidates</h2>
+
+<form asp-action="SearchCandidates" method="post">
+    <div class="form-group">
+        <label for="primarySkills">Select Primary Skill</label>
+        <select id="primarySkills" name="primarySkills" class="form-control" required>
+            <option value="">--Select Primary Skill--</option>
+            @foreach (var skill in ViewBag.PrimarySkills)
+            {
+                <option value="@skill">@skill</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-warning">@ViewBag.Message</div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <h3>Search Results</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Resume</th> <!-- Changed header to "Resume" -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model)
+            {
+                <tr>
+                    <td>@applicant.FirstName @applicant.LastName</td> <!-- Combined first and last name -->
+                    <td>@applicant.EmailId</td>
+                    <td>@applicant.Phone</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(applicant.Resume))
+                        {
+                            <a href="@Url.Action("DownloadResume", "JobApplication", new { applicationId = applicant.UserId })" class="btn btn-info btn-sm">Download</a>
+                        }
+                        else
+                        {
+                            <span>No Resume Available</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>No candidates found.</div>
+}

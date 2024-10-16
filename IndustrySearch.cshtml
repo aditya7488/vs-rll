@@ -1,0 +1,55 @@
+﻿<form method="post">
+    <label for="selectedIndustry">Industry:</label>
+    <select id="selectedIndustry" name="selectedIndustry">
+        <option value="">--Select Industry--</option>
+        @foreach (var industry in ViewBag.Industries)
+        {
+            <option value="@industry">@industry</option>
+        }
+    </select>
+
+    <label for="selectedJobType">Specilization:</label>
+    <select id="selectedJobType" name="selectedJobType">
+        <option value="">--Select Specilization--</option>
+        @foreach (var jobType in ViewBag.JobTypes)
+        {
+            <option value="@jobType">@jobType</option>
+        }
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+@if (ViewBag.JobResults != null && ViewBag.JobResults.Count > 0)
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Salary Range</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in ViewBag.JobResults)
+            {
+                <tr>
+                    <td>@job.JobTitle</td>
+                    <td>@job.Company.CompanyName</td>
+                    <td>@job.JobLocation</td>
+                    <td>@job.SalaryRange</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No job posts found for the selected criteria.</p>
+}
+
+
+
+
+

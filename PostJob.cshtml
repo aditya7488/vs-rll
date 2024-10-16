@@ -1,0 +1,59 @@
+﻿@model JobPortal.Models.JobPost
+
+<form asp-action="PostJob" method="post">
+    <div>
+        <label asp-for="CompanyId"></label>
+        <input asp-for="CompanyId" />
+        <span asp-validation-for="CompanyId" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="JobTitle"></label>
+        <input asp-for="JobTitle" />
+        <span asp-validation-for="JobTitle" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="JobDescription"></label>
+        <textarea asp-for="JobDescription"></textarea>
+        <span asp-validation-for="JobDescription" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="SalaryRange"></label>
+        <input asp-for="SalaryRange" />
+        <span asp-validation-for="SalaryRange" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="JobLocation"></label>
+        <input asp-for="JobLocation" />
+        <span asp-validation-for="JobLocation" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="PostDate"></label>
+        <input asp-for="PostDate" type="date" />
+        <span asp-validation-for="PostDate" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="ExperienceRequired"></label>
+        <input asp-for="ExperienceRequired" />
+        <span asp-validation-for="ExperienceRequired" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="MinimumQualification"></label>
+        <input asp-for="MinimumQualification" />
+        <span asp-validation-for="MinimumQualification" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="JobType"></label>
+        <input asp-for="JobType" />
+        <span asp-validation-for="JobType" class="text-danger"></span>
+    </div>
+    <button type="submit">Post Job</button>
+</form>
+
+<div>
+    @if (ViewData["Message"] != null)
+    {
+        <p>@ViewData["Message"]</p>
+    }
+</div>
+
+

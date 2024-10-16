@@ -1,0 +1,23 @@
+﻿@model JobPortal.Models.JobPost
+
+<h2>Job Details</h2>
+
+<div>
+    <h3>@Model.JobTitle</h3>
+    <p><strong>Description:</strong></p>
+    <p>@Model.JobDescription</p>
+    <p><strong>Location:</strong> @Model.JobLocation</p>
+    <p><strong>Salary Range:</strong> @Model.SalaryRange</p>
+    <p><strong>Posted On:</strong> @Model.PostDate.ToString("d")</p>
+    <p><strong>Experience Required:</strong> @Model.ExperienceRequired years</p>
+    <p><strong>Minimum Qualification:</strong> @Model.MinimumQualification</p>
+    <p><strong>Job Type:</strong> @Model.JobType</p>
+</div>
+
+<div>
+    @if (ViewData["Message"] != null)
+    {
+        <p>@ViewData["Message"]</p>
+    }
+</div>
+

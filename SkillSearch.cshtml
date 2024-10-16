@@ -1,0 +1,70 @@
+﻿@model IEnumerable<JobPortal.Models.JobPost>
+
+@{
+    ViewBag.Title = "Job Search";
+}
+
+<h2>Search for Jobs</h2>
+
+<form asp-action="SkillSearch" method="post">
+    <div class="form-group">
+        <label for="primarySkill">Select Primary Skill</label>
+        <select id="primarySkill" name="primarySkill" class="form-control" required>
+            <option value="">--Select Primary Skill--</option>
+            @foreach (var skill in ViewBag.PrimarySkills)
+            {
+                <option value="@skill">@skill</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="secondarySkill">Select Secondary Skill</label>
+        <select id="secondarySkill" name="secondarySkill" class="form-control">
+            <option value="">--Select Secondary Skill--</option>
+            @foreach (var skill in ViewBag.SecondarySkills)
+            {
+                <option value="@skill">@skill</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (ViewBag.JobResults != null)
+{
+    var jobResults = (List<JobPortal.Models.JobPost>)ViewBag.JobResults;
+
+    if (jobResults.Any())
+    {
+        <h3>Job Search Results</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Job Description</th>
+                    <th>Salary Range</th>
+                    <th>Location</th>
+                    <th>Action</th> <!-- New column for actions -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var job in jobResults)
+                {
+                    <tr>
+                        <td>@job.JobTitle</td>
+                        <td>@job.JobDescription</td>
+                        <td>@job.SalaryRange</td>
+                        <td>@job.JobLocation</td>
+                        <td>
+                            <a href="@Url.Action("Apply", "JobApplication", new { jobId = job.JobId })" class="btn btn-success">Apply</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div>No jobs found for the selected skills.</div>
+    }
+}
