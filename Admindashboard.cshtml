@@ -1,0 +1,168 @@
+﻿@model Tuple<IEnumerable<JobPortalApp1.Models.Admin>, IEnumerable<JobPortalApp1.Models.Company>, IEnumerable<JobPortalApp1.Models.JobApplicant>>
+
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .navbar {
+        background-color: #001f3f; /* Navy blue */
+    }
+
+    .container {
+        margin-top: 20px;
+    }
+
+    h2, h3 {
+        color: #001f3f; /* Navy blue */
+    }
+
+    .table {
+        border: 1px solid #007bff; /* Light blue border */
+    }
+
+        .table th {
+            background-color: #007bff; /* Light blue */
+            color: white;
+        }
+
+        .table td {
+            background-color: white;
+        }
+
+    .btn-primary {
+        background-color: #007bff; /* Light blue */
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue */
+            border-color: #004085; /* Darker border */
+        }
+
+    .btn-danger {
+        background-color: #dc3545; /* Red */
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Darker red */
+            border-color: #bd2130; /* Darker border */
+        }
+
+    .form-control {
+        border: 1px solid #007bff; /* Light blue */
+    }
+
+        .form-control:focus {
+            border-color: #0056b3; /* Darker blue */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+</style>
+
+<div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <h3>Manage Admins</h3>
+    <form method="get" class="mb-3">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by username or email" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Admin ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var admin in Model.Item1)
+            {
+                <tr>
+                    <td>@admin.AdminId</td>
+                    <td>@admin.Username</td>
+                    <td>@admin.Email</td>
+                    <td>@admin.Role</td>
+                    <td>
+                        <a asp-action="EditAdmin" asp-route-id="@admin.AdminId" class="btn btn-warning btn-sm">Edit</a>
+                        <form asp-action="DeleteAdmin" asp-route-id="@admin.AdminId" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Manage Companies</h3>
+    <form method="get" class="mb-3">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by company name or email" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Company ID</th>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in Model.Item2)
+            {
+                <tr>
+                    <td>@company.CompanyId</td>
+                    <td>@company.CompanyName</td>
+                    <td>@company.Email</td>
+                    <td>
+                        <a asp-action="EditCompany" asp-route-id="@company.CompanyId" class="btn btn-warning btn-sm">Edit</a>
+                        <form asp-action="DeleteCompany" asp-route-id="@company.CompanyId" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Manage Job Applicants</h3>
+    <form method="get" class="mb-3">
+        <input type="text" name="searchTerm" class="form-control" placeholder="Search by name or email" />
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model.Item3)
+            {
+                <tr>
+                    <td>@applicant.UserId</td>
+                    <td>@applicant.FirstName @applicant.LastName</td>
+                    <td>@applicant.EmailId</td>
+                    <td>
+                        <a asp-action="EditJobApplicant" asp-route-id="@applicant.UserId" class="btn btn-warning btn-sm">Edit</a>
+                        <form asp-action="DeleteJobApplicant" asp-route-id="@applicant.UserId" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

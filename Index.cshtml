@@ -1,234 +1,91 @@
-﻿ @* @model ienumerable<jobportal.models.jobpost>
+﻿@model IEnumerable<JobPortalApp1.Models.JobApplicant> // Use the appropriate model for job seekers
 
+@{
+    ViewBag.Title = "AdminDashboard";
+}
 
-
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>employer dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4">employer dashboard</h2>
+    <div class="container">
+        <h2>Admin Dashboard</h2>
 
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3>your job postings</h3>
-            </div>
-            <div class="card-body">
-                <form asp-action="searchcandidates" method="get">
-                    <div class="form-group">
-                        <label for="primaryskills">primary skills</label>
-                        <select class="form-control" name="primaryskills">
-                            <option value="">select primary skill</option>
-                            @foreach (var skill in viewbag.primaryskills)
-                            {
-                                <option value="@skill">@skill</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="secondaryskills">secondary skills</label>
-                        <select class="form-control" name="secondaryskills">
-                            <option value="">select secondary skill</option>
-                            @foreach (var skill in viewbag.secondaryskills)
-                            {
-                                <option value="@skill">@skill</option>
-                            }
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">search</button>
-                </form>
-
-
-                
-                <table class="table table-striped mt-3">
-                    <thead class="thead-dark">
+        <h3>Manage Job Seekers</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Job Seeker ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.JobApplicants != null && ViewBag.JobApplicants.Any())
+                {
+                    foreach (var seeker in ViewBag.JobApplicants)
+                    {
                         <tr>
-                            <th>job title</th>
-                            <th>description</th>
-                            <th>location</th>
-                            <th>salary range</th>
-                            <th>post date</th>
-                            <th>actions</th>
+                            <td>@seeker.AdminId</td>
+                            <td>@seeker.Name</td>
+                            <td>@seeker.Email</td>
+                            <td>
+                                <a asp-action="ViewJobSeeker" asp-route-id="@seeker.Id" class="btn btn-info btn-sm">View</a>
+                                <a asp-action="EditJobSeeker" asp-route-id="@seeker.Id" class="btn btn-warning btn-sm">Edit</a>
+                                <a asp-action="DeleteJobSeeker" asp-route-id="@seeker.Id" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var job in model)
-                        {
-                            <tr>
-                                <td>@job.jobtitle</td>
-                                <td>@job.jobdescription</td>
-                                <td>@job.joblocation</td>
-                                <td>@job.salaryrange</td>
-                                <td>@job.postdate.tostring("d")</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" asp-action="editjob" asp-route-id="@job.jobid">edit</a>
-                                    <a class="btn btn-danger btn-sm" asp-action="deletejob" asp-route-id="@job.jobid">delete</a>
-                                    <a class="btn btn-info btn-sm" asp-action="viewjobdescription" asp-route-id="@job.jobid">view</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <a class="btn btn-success" asp-action="postjob">post a new job</a>
-            </div>
-        </div>
-    </div>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">No job seekers found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html> *@
- 
-
-@* 
-@model IEnumerable<JobPortal.Models.JobPost>
-
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employer Dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Employer Dashboard</h2>
-
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3>Your Job Postings</h3>
-            </div>
-            <div class="card-body">
-                <form asp-action="SearchCandidates" method="get">
-                    <div class="form-group">
-                        <label for="primaryskills">Primary Skills</label>
-                        <select class="form-control" name="primaryskills">
-                            <option value="">Select Primary Skill</option>
-                            @if (ViewBag.PrimarySkills != null)
-                            {
-                                foreach (var skill in ViewBag.PrimarySkills)
-                                {
-                                    <option value="@skill">@skill</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                  
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
-
-                <table class="table table-striped mt-3">
-                    <thead class="thead-dark">
+        <h3>Manage Employers</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Employer ID</th>
+                    <th>Company Name</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.Employers != null && ViewBag.Employers.Any())
+                {
+                    foreach (var employer in ViewBag.Employers)
+                    {
                         <tr>
-                            <th>Job Title</th>
-                            <th>Description</th>
-                            <th>Location</th>
-                            <th>Salary Range</th>
-                            <th>Post Date</th>
-                            <th>Actions</th>
+                            <td>@employer.Id</td>
+                            <td>@employer.Name</td>
+                            <td>@employer.Email</td>
+                            <td>
+                                <a asp-action="ViewEmployer" asp-route-id="@employer.Id" class="btn btn-info btn-sm">View</a>
+                                <a asp-action="EditEmployer" asp-route-id="@employer.Id" class="btn btn-warning btn-sm">Edit</a>
+                                <a asp-action="DeleteEmployer" asp-route-id="@employer.Id" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var job in Model)
-                        {
-                            <tr>
-                                <td>@job.JobTitle</td>
-                                <td>@job.JobDescription</td>
-                                <td>@job.JobLocation</td>
-                                <td>@job.SalaryRange</td>
-                                <td>@job.PostDate.ToString("d")</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" asp-action="EditJob" asp-route-id="@job.JobId">Edit</a>
-                                    <a class="btn btn-danger btn-sm" asp-action="DeleteJob" asp-route-id="@job.JobId">Delete</a>
-                                    <a class="btn btn-info btn-sm" asp-action="ViewJobDescription" asp-route-id="@job.JobId">View</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <a class="btn btn-success" asp-action="PostJob">Post a New Job</a>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
- *@
-
- @model IEnumerable<JobPortal.Models.JobPost>
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employer Dashboard</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Employer Dashboard</h2>
-        <a class="btn btn-warning mt-3" asp-action="SearchCandidates">Search Candidates</a> <!-- New button added here -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h3>Your Job Postings</h3>
-            </div>
-            
-
-
-
-
-
-                <table class="table table-striped mt-3">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Job Title</th>
-                            <th>Description</th>
-                            <th>Location</th>
-                            <th>Salary Range</th>
-                            <th>Post Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var job in Model)
-                        {
-                            <tr>
-                                <td>@job.JobTitle</td>
-                                <td>@job.JobDescription</td>
-                                <td>@job.JobLocation</td>
-                                <td>@job.SalaryRange</td>
-                                <td>@job.PostDate.ToString("d")</td>
-                                <td>
-                                    <a class="btn btn-primary btn-sm" asp-action="EditJob" asp-route-id="@job.JobId">Edit</a>
-                                    <a class="btn btn-danger btn-sm" asp-action="DeleteJob" asp-route-id="@job.JobId">Delete</a>
-                                    <a class="btn btn-info btn-sm" asp-action="ViewJobDescription" asp-route-id="@job.JobId">View</a>
-                                    <a class="btn btn-info btn-sm" asp-action="ViewJobApplications" asp-route-Jobid="@job.JobId">View Application</a>
-                                    
-                                    
-                                  
-                                   
-
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <a class="btn btn-success" asp-action="PostJob">Post a New Job</a>
-
-
-            </div>
-        </div>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">No employers found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
