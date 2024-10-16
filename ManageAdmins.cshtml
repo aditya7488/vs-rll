@@ -1,0 +1,110 @@
+﻿@model IEnumerable<JobPortalApp1.Models.Admin>
+
+@{
+    ViewBag.Title = "Manage Admins";
+}
+
+
+
+
+<style>
+    body {
+        background-color: #f0f4f8; /* Light background */
+        font-family: 'Arial', sans-serif; /* Elegant font style */
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 30px;
+        background-color: #ffffff; /* White background for the container */
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    }
+
+    h2 {
+        color: #003366; /* Navy blue for the heading */
+        text-align: center; /* Center align heading */
+        margin-bottom: 30px; /* Spacing below heading */
+    }
+
+    input[type="text"] {
+        width: 100%; /* Full width for the search input */
+        padding: 12px; /* Padding for comfort */
+        border: 1px solid #007bff; /* Sea blue border */
+        border-radius: 5px; /* Rounded corners */
+        margin-bottom: 15px; /* Spacing below input */
+    }
+
+    .btn-primary {
+        background-color: #007bff; /* Sea blue for primary button */
+        border-color: #007bff; /* Match border */
+        font-weight: bold; /* Bold text for buttons */
+    }
+
+    .table {
+        margin-top: 20px; /* Spacing above the table */
+        border: 1px solid #ccc; /* Light gray border for the table */
+    }
+
+    .table th {
+        background-color: #003366; /* Navy blue for header */
+        color: white; /* White text for headers */
+        text-align: center; /* Center align header text */
+    }
+
+    .table td {
+        background-color: #f8f9fa; /* Light gray for cells */
+        text-align: center; /* Center align cell text */
+    }
+
+    .table tr:hover {
+        background-color: #e2f0fe; /* Light sea blue on hover */
+    }
+
+    .btn-warning {
+        background-color: #ffc107; /* Yellow for edit */
+        border-color: #ffc107; /* Match border */
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Red for delete */
+        border-color: #dc3545; /* Match border */
+    }
+</style>
+
+<div class="container">
+    <h2>Manage Admins</h2>
+    <form method="get" class="mb-3">
+        <input type="text" name="searchTerm" placeholder="Search by username or email" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Admin ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var admin in Model)
+            {
+                <tr>
+                    <td>@admin.AdminId</td>
+                    <td>@admin.Username</td>
+                    <td>@admin.Email</td>
+                    <td>@admin.Role</td>
+                    <td>
+                        <a asp-action="EditAdmin" asp-route-id="@admin.AdminId" class="btn btn-warning btn-sm">Edit</a>
+                        <form asp-action="DeleteAdmin" asp-route-id="@admin.AdminId" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

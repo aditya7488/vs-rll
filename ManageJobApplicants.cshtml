@@ -1,0 +1,108 @@
+﻿@model IEnumerable<JobPortalApp1.Models.JobApplicant>
+
+@{
+    ViewBag.Title = "Manage Job Applicants";
+}
+
+
+
+
+<style>
+    body {
+        background-color: #f4f4f4; /* Light gray background */
+        font-family: 'Arial', sans-serif; /* Elegant font style */
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 30px;
+        background-color: #ffffff; /* White background for the container */
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    }
+
+    h2 {
+        color: #6f42c1; /* Purple for the heading */
+        text-align: center; /* Center align heading */
+        margin-bottom: 30px; /* Spacing below heading */
+    }
+
+    input[type="text"] {
+        width: 100%; /* Full width for the search input */
+        padding: 12px; /* Padding for comfort */
+        border: 1px solid #3ddc8a; /* Mint green border */
+        border-radius: 5px; /* Rounded corners */
+        margin-bottom: 15px; /* Spacing below input */
+    }
+
+    .btn-primary {
+        background-color: #3ddc8a; /* Mint green for primary button */
+        border-color: #3ddc8a; /* Match border */
+        font-weight: bold; /* Bold text for buttons */
+    }
+
+    .table {
+        margin-top: 20px; /* Spacing above the table */
+        border: 1px solid #ccc; /* Light gray border for the table */
+    }
+
+    .table th {
+        background-color: #6f42c1; /* Purple for header */
+        color: white; /* White text for headers */
+        text-align: center; /* Center align header text */
+    }
+
+    .table td {
+        background-color: #f8f9fa; /* Light gray for cells */
+        text-align: center; /* Center align cell text */
+    }
+
+    .table tr:hover {
+        background-color: #d1f7e5; /* Light mint green on hover */
+    }
+
+    .btn-warning {
+        background-color: #ffc107; /* Yellow for edit */
+        border-color: #ffc107; /* Match border */
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Red for delete */
+        border-color: #dc3545; /* Match border */
+    }
+</style>
+
+<div class="container">
+    <h2>Manage Job Applicants</h2>
+    <form method="get" class="mb-3">
+        <input type="text" name="searchTerm" placeholder="Search by name or email" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var applicant in Model)
+            {
+                <tr>
+                    <td>@applicant.UserId</td>
+                    <td>@applicant.FirstName @applicant.LastName</td>
+                    <td>@applicant.EmailId</td>
+                    <td>
+                        <a asp-action="EditJobApplicant" asp-route-id="@applicant.UserId" class="btn btn-warning btn-sm">Edit</a>
+                        <form asp-action="DeleteJobApplicant" asp-route-id="@applicant.UserId" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
