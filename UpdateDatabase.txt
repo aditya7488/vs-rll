@@ -1,0 +1,254 @@
+CREATE DATABASE jobPortalNew;
+USE jobPortalNew;
+
+
+CREATE TABLE job_applicants (
+    user_id INT PRIMARY KEY IDENTITY(1,1),
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    phone VARCHAR(15) UNIQUE,
+    address VARCHAR(255),
+    email_id VARCHAR(100) UNIQUE NOT NULL,
+    dob DATE,
+    Resumee VARBINARY(MAX),
+    gender VARCHAR(10),
+);
+INSERT INTO job_applicants (first_name, last_name, phone, address, email_id, dob, resume, gender)
+VALUES ('John', 'Doe', '1234567890', '123 Main St, Anytown, USA', 'john.doe@example.com', '1990-01-01', 'Resume content here', 'Male');
+ 
+INSERT INTO job_applicants (first_name, last_name, phone, address, email_id, dob, resume, gender)
+VALUES ('Jane', 'Smith', '0987654321', '456 Elm St, Othertown, USA', 'jane.smith@example.com', '1992-02-02', 'Resume content here', 'Female');
+ 
+select *from job_applicants
+ 
+
+CREATE TABLE Companies (
+    company_id INT PRIMARY KEY IDENTITY(1,1),
+    company_name VARCHAR(100) NOT NULL UNIQUE,
+    type VARCHAR(50),
+    website VARCHAR(255),
+    location VARCHAR(255),
+    email NVARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15)
+);
+select *from Companies
+ 
+ 
+INSERT INTO Companies (company_name, type, website, location, email, phone)
+VALUES
+('Tech Innovations', 'Technology', 'https://www.techinnovations.com', 'San Francisco, CA', 'info@techinnovations.com', '123-456-7890'),
+ 
+('Creative Solutions', 'Consulting', 'https://www.creativesolutions.com', 'New York, NY', 'contact@creativesolutions.com', '098-765-4321');
+ 
+ 
+('Global Enterprises', 'Finance', 'https://www.globalenterprises.com', 'London, UK', 'info@globalenterprises.com', '234-567-8901'),
+ 
+('Health First', 'Healthcare', 'https://www.healthfirst.com', 'Toronto, Canada', 'contact@healthfirst.com', '345-678-9012');
+ 
+select*from Jobposts;
+select*from Companies
+drop table Companies
+ 
+
+CREATE TABLE JobPosts (
+    job_id INT PRIMARY KEY IDENTITY(1,1),
+    company_id INT NOT NULL,
+    job_title VARCHAR(100) NOT NULL,
+    job_description TEXT NOT NULL,
+    salary_range VARCHAR(50),
+    job_location VARCHAR(255),
+    post_date DATE NOT NULL DEFAULT GETDATE(),
+    experience_required INT,
+    minimum_qualification VARCHAR(100),
+    job_type VARCHAR(20), 
+    FOREIGN KEY (company_id) REFERENCES Companies(company_id) ON DELETE CASCADE
+);
+drop table JobPosts
+ 
+select*from Jobposts;
+ 
+CREATE TABLE EducationalQualifications (
+    user_id INT NOT NULL,
+    degree VARCHAR(100) NOT NULL,
+    institution VARCHAR(100) NOT NULL,
+    field_of_study VARCHAR(100) NOT NULL,
+    graduation_year INT NOT NULL,
+    cgpa DECIMAL(3, 2),
+    PRIMARY KEY (user_id, degree),
+    FOREIGN KEY (user_id) REFERENCES job_applicants(user_id) ON DELETE CASCADE
+);
+ 
+
+CREATE TABLE ProfessionalDetails (
+    user_id INT NOT NULL,
+    current_company VARCHAR(100),
+    current_role VARCHAR(100),
+    total_experience_years DECIMAL(4, 2),
+    notice_period VARCHAR(50),
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (user_id) REFERENCES job_applicants(user_id) ON DELETE CASCADE
+);
+ 
+
+CREATE TABLE Skills (
+    skill_id INT PRIMARY KEY IDENTITY(1,1),
+    candidate_id INT NOT NULL,
+    primary_skill VARCHAR(100) NOT NULL,
+    secondary_skill VARCHAR(100),
+    FOREIGN KEY (candidate_id) REFERENCES job_applicants(user_id) ON DELETE CASCADE
+);
+INSERT INTO Skills (candidate_id, primary_skill, secondary_skill)
+VALUES (1, 'Java', 'SQL');
+ 
+INSERT INTO Skills (candidate_id, primary_skill, secondary_skill)
+VALUES (2, 'C#', 'JavaScript');
+ 
+ 
+select*from job_applicants
+select*from Skills
+ 
+ 
+
+CREATE TABLE Applications (
+    application_id INT PRIMARY KEY IDENTITY(1,1),
+    job_id INT NOT NULL,
+    job_seeker_id INT NOT NULL,
+    applied_date DATE NOT NULL DEFAULT GETDATE(),
+    status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES JobPosts(job_id) ON DELETE CASCADE,
+    FOREIGN KEY (job_seeker_id) REFERENCES job_applicants(user_id) ON DELETE CASCADE
+);
+INSERT INTO Applications (job_id, job_seeker_id, applied_date, status)
+VALUES
+(16, 1, GETDATE(), 'Pending'),  -- Assuming job_id 1 and job_seeker_id 1 exist
+(17, 2, GETDATE(), 'Under Review');  -- Assuming job_id 2 and job_seeker_id 2 exist
+ 
+select * from job_applicants
+select * from Applications
+select * from job_applicants
+select * from JobPosts
+ 
+ 
+ 
+
+CREATE TABLE applicant_registration (
+    user_id INT identity PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    password VARBINARY(32) NOT NULL,
+    email VARCHAR(100) UNIQUE,  
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    phone VARCHAR(15),
+    profile_picture VARCHAR(255),
+    registration_date DATETIME DEFAULT GETDATE()
+);
+
+ 
+ 
+select * from applicant_registration
+ 
+ 
+CREATE TABLE notifications (
+    notification_id INT PRIMARY KEY IDENTITY(1,1),
+    company_id INT,
+    user_id INT,
+    message TEXT,
+    status VARCHAR(20) DEFAULT 'unread',
+    FOREIGN KEY (company_id) REFERENCES Companies(company_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES job_applicants(user_id) ON DELETE CASCADE
+);
+ 
+
+CREATE TABLE company_registration (
+  password VARBINARY(32) NOT NULL,
+	company_id INT PRIMARY KEY,
+    company_name VARCHAR(100) UNIQUE,
+    contact_person VARCHAR(50),
+    phone VARCHAR(15),
+    email VARCHAR(100) UNIQUE,
+    address VARCHAR(255)
+);
+ 
+INSERT INTO company_registration (password, company_name, contact_person, phone, email, address) 
+VALUES 
+    (CONVERT(VARBINARY(32), 'abc123'), 'Tech Innovations', 'Alice Johnson', '1234567890', 'alice@techinnovations.com', '123 Tech Lane, Silicon Valley'),
+    (CONVERT(VARBINARY(32), 'abc123'), 'Green Solutions', 'Bob Smith', '0987654321', 'bob@greensolutions.com', '456 Eco Road, Green City');
+ 
+ 
+ 
+ 
+drop tABLE company_registration
+select * from company_registration
+ 
+
+CREATE TABLE saved_jobs (
+    saved_job_id INT PRIMARY KEY IDENTITY(1,1),
+    user_id INT,
+    job_id INT,
+    saved_at DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (user_id) REFERENCES job_applicants(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (job_id) REFERENCES JobPosts(job_id) ON DELETE CASCADE
+);
+CREATE TABLE admin (
+    admin_id INT PRIMARY KEY IDENTITY(1,1),
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARBINARY(32) NOT NULL, -- Ensure passwords are hashed
+    email VARCHAR(100) UNIQUE NOT NULL,
+    created_at DATETIME DEFAULT GETDATE()
+);
+CREATE TABLE password_resets (
+    reset_id INT PRIMARY KEY IDENTITY(1,1),
+    user_id INT NOT NULL,
+	username VARCHAR(50) UNIQUE NOT NULL,
+    password VARBINARY(32) NOT NULL, -- Ensure passwords are hashed
+
+    FOREIGN KEY (user_id) REFERENCES applicant_registration(user_id) ON DELETE CASCADE
+);
+DROP TABLE password_resets
+ 
+CREATE TABLE JobSkills (
+    job_skill_id INT PRIMARY KEY IDENTITY(1,1),
+    job_id INT NOT NULL,
+    p_skill VARCHAR(100) NOT NULL,
+	s_skill VARCHAR(100) NOT NULL,
+    FOREIGN KEY (job_id) REFERENCES JobPosts(job_id) ON DELETE CASCADE
+);
+INSERT INTO JobSkills (job_id, p_skill, s_skill) VALUES (5, 'C#', 'ASP.NET');
+INSERT INTO JobSkills (job_id, p_skill, s_skill) VALUES (5, 'Java', 'SQL');
+INSERT INTO JobSkills (job_id, p_skill, s_skill) VALUES (10, 'Python', 'Django');
+INSERT INTO JobSkills (job_id, p_skill, s_skill) VALUES (13, 'JavaScript', 'React');
+ 
+ 
+select*from JobSkills;
+select*from Jobposts;
+ 
+ 
+ 
+ 
+ 
+drop table  JobApplicationsView;
+select*from JobApplicationsView;
+select * from job_applicants
+select * from Applications
+select * from JobPosts
+ 
+CREATE TABLE JobApplications (
+    ApplicationId INT PRIMARY KEY IDENTITY(1,1),
+    JobId INT NOT NULL,
+    ApplicantId INT NOT NULL,
+    AppliedDate DATE NOT NULL DEFAULT GETDATE(),
+   
+    Resume VARBINARY(MAX),
+    
+    FOREIGN KEY (JobId) REFERENCES JobPosts(job_id) ON DELETE CASCADE,
+    FOREIGN KEY (ApplicantId) REFERENCES job_applicants(user_id) ON DELETE CASCADE
+);
+select * from job_applicants
+select * from JobPosts
+select * from JobApplications
+INSERT INTO JobApplications (JobId, ApplicantId, AppliedDate, Resume)
+VALUES
+(33, 1, GETDATE(),'resume1.pdf'), -- First application
+(35, 2, GETDATE(),'resume2.pdf'); -- Second application
+ 
+has context menu
